@@ -1,3 +1,4 @@
+// category btn load to api function
 const categoriesBtnLoad = async () => {
   const res = await fetch(
     "https://openapi.programming-hero.com/api/peddy/categories"
@@ -5,14 +6,16 @@ const categoriesBtnLoad = async () => {
   const data = await res.json();
   displayCategoryBtn(data.categories);
 };
+// category btn load to api function call
 categoriesBtnLoad();
 
+// category btn display funtion 
 const displayCategoryBtn = (categoryBtn) => {
   const btnContainer = document.getElementById("btn-container");
   categoryBtn.forEach((element) => {
     const btn = document.createElement("button");
     btn.innerHTML = `
-    <button onclick="loadCategoryCard('${element.category}')" class="w-full py-4 rounded-lg border border-[#0E7A81] border-opacity-20 bg-white hover:bg-white flex items-center justify-center gap-2 ">
+    <button id="btn-${element.id}" onclick="loadCategoryCard('${element.category}',${element.id})" class="category-btn w-full py-4 rounded-lg border border-[#0E7A81] border-opacity-40 bg-white hover:bg-white flex items-center justify-center gap-2 ">
               <img class="w-10" src="${element.category_icon}" alt="">
               <p class="font-extrabold text-lg text-black">${element.category}</p>
             </button>
@@ -20,7 +23,7 @@ const displayCategoryBtn = (categoryBtn) => {
     btnContainer.append(btn);
   });
 };
-
+// all pet card load to api funtion
 const allCardLoad = async () => {
   document.getElementById("loader").classList.remove("hidden");
   document.getElementById("optional-div1").classList.remove("hidden");
@@ -37,18 +40,35 @@ const allCardLoad = async () => {
     document.getElementById("optional-div2").classList.add("hidden");
   }, 2000);
 };
+
+// all pet card load to api funtion
 allCardLoad();
 
-const loadCategoryCard = async (id) => {
+// active btn disable active
+const ditactiveBtn=()=>{
+ const buttons = document.getElementsByClassName('category-btn');
+ for(let btn of buttons){
+  btn.classList.remove('rounded-full');
+  btn.classList.add('rounded-lg')
+ }
+}
+
+// load daynamically data to categoryli
+const loadCategoryCard = async (category, id) => {
   const response = await fetch(
-    `https://openapi.programming-hero.com/api/peddy/category/${id}`
+    `https://openapi.programming-hero.com/api/peddy/category/${category}`
   );
   const data = await response.json();
+  ditactiveBtn();
+  const clickBtn = document.getElementById(`btn-${id}`)
+  clickBtn.classList.add('rounded-full');
+  clickBtn.classList.remove('rounded-lg')
   setTimeout(() => {
     displayAllPets(data.data);
   }, 2000);
-};
 
+};
+// display all pet card function
 const displayAllPets = (petsArr) => {
 
   const cardContainer = document.getElementById("card-container");
@@ -126,7 +146,6 @@ const sideDivImgShow= (image)=>{
   sideDiv.appendChild(photo);
 }
 
-
 // pet ditails modal function
 const modalOpener = async (id) => {
   const res = await fetch(
@@ -202,7 +221,7 @@ const modalOpener = async (id) => {
 
 // adoption btn modal js
 
-function openModal() {
+const openModal = ()=> {
   const modal = document.getElementById('my_modal_5');
   modal.showModal();
 
@@ -213,9 +232,8 @@ function openModal() {
   document.getElementById('countdown').classList.add('hidden');
   document.getElementById('countdown').textContent = '';
 }
-
-
-  document.getElementById('close-btn').addEventListener('click', function (e) {
+const closeBtn = document.getElementById('close-btn');
+  closeBtn.addEventListener('click', function (e) {
   e.preventDefault();
   document.getElementById('close-btn').classList.add('hidden');
   const modalContent = document.getElementById('modal-content');
