@@ -86,8 +86,8 @@
         
             <div class="flex items-center justify-between">
               <h2 class="font-bold text-base text-black">Best Deal For you</h2>
-              <button class="btn bg-[#0E7A81] hover:bg-[#0E7A81] text-base text-white font-bold">
-                Short by Price
+              <button id="sort-btn" class="btn bg-[#0E7A81] hover:bg-[#0E7A81] text-base text-white font-bold">
+                Sort by Price
               </button>
             </div>
             <!-- daynamic card append to api section start-->
@@ -96,13 +96,11 @@
                 <!-- card container -->
                 <div id="card-container" class="w-full lg:w-8/12 grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
 
-                  <div id="optional-div1" class="hidden"></div>
                      <!-- loader start -->
-                    <div id="loader" class="hidden">
+                    <div id="loader" class="col-span-3 text-center hidden">
                       <span class="loading loading-dots loading-lg"></span>
                     </div>
                     <!-- loader end -->
-                     <div id="optional-div2" class="hidden"></div>
                   </div>
                 <!-- dynamic photo append -->
                 <div class="w-full lg:w-4/12 border border-gray-400 border-opacity-20 rounded-lg p-2">  

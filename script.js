@@ -24,10 +24,8 @@ const displayCategoryBtn = (categoryBtn) => {
   });
 };
 // all pet card load to api funtion
-const allCardLoad = async () => {
+ const allCardLoad = async () => {
   document.getElementById("loader").classList.remove("hidden");
-  document.getElementById("optional-div1").classList.remove("hidden");
-  document.getElementById("optional-div2").classList.remove("hidden");
   const res = await fetch(
     `https://openapi.programming-hero.com/api/peddy/pets`
   );
@@ -36,8 +34,6 @@ const allCardLoad = async () => {
   setTimeout(() => {
     displayAllPets(data.pets);
     document.getElementById("loader").classList.add("hidden");
-    document.getElementById("optional-div1").classList.add("hidden");
-    document.getElementById("optional-div2").classList.add("hidden");
   }, 2000);
 };
 
@@ -59,13 +55,35 @@ const loadCategoryCard = async (category, id) => {
     `https://openapi.programming-hero.com/api/peddy/category/${category}`
   );
   const data = await response.json();
+  // category btn ditactive function call
   ditactiveBtn();
+  // category btn active class
   const clickBtn = document.getElementById(`btn-${id}`)
   clickBtn.classList.add('rounded-full');
-  clickBtn.classList.remove('rounded-lg')
+  clickBtn.classList.remove('rounded-lg');
+
+  
+  const  cardcontainer= document.getElementById('card-container')
+    const timer = 3000;
+    const intervaltimer = 1000;
+  
+    let slice = timer / intervaltimer;
+     
+    const intvId = setInterval(()=> {
+      
+        cardcontainer.innerHTML= ` 
+        <div class="col-span-3 text-center" id="loader">
+         <span  class="loading loading-dots loading-lg"></span>
+        </div>
+        `
+        
+      slice = slice - 1;
+    }, intervaltimer);
+
   setTimeout(() => {
     displayAllPets(data.data);
-  }, 2000);
+    clearInterval(intvId);
+  },timer);
 
 };
 // display all pet card function
@@ -92,7 +110,7 @@ const displayAllPets = (petsArr) => {
     card.innerHTML = `
       <!-- temp card -->
                     <!-- daynamic card append to api -->
-                    <div class="card border border-gray-300 rounded-lg p-4">
+                    <div class="pet-card card border border-gray-300 rounded-lg p-4">
                       <figure class="">
                         <img
                           src="${pet.image}"
@@ -104,17 +122,17 @@ const displayAllPets = (petsArr) => {
                           pet.pet_name
                         }</h2>
                         <p class="ftext-base text-gray-400"><i class="fa-solid fa-grip-vertical"></i>&nbsp; Breed: ${
-                          pet.breed ? `${pet.breed}` : "Uknown"
+                          pet.breed ? `${pet.breed}` : "Unknown"
                         }</p>
                         <p class="text-base text-gray-400"><i class="fa-regular fa-calendar"></i>&nbsp; Birth: ${
-                          pet.date_of_birth ? `${pet.date_of_birth}` : "Uknown"
+                          pet.date_of_birth ? `${pet.date_of_birth}` : "Unknown"
                         }</p>
                         <p class="text-base text-gray-400"><i class="fa-solid fa-mercury"></i>&nbsp; Gender: ${
-                          pet.gender ? `${pet.gender}` : "Uknown"
+                          pet.gender ? `${pet.gender}` : "Unknown"
                         }</p>
                         <p class="text-base text-gray-400"><i class="fa-solid fa-dollar-sign"></i>&nbsp; Price:&nbsp;<span>${
-                          pet.price ? `${pet.price}` : "0"
-                        }</span>&nbsp;<i class="fa-solid fa-dollar-sign text-sm"></i></p>
+                          pet.price ? `${pet.price}$` : "Not available"
+                        }</p>
                         <hr class="border bottom-1 mt-3 border-gray-400 border-opacity-20">
                         <div class="flex justify-between items-center mt-3">
                           <button onclick="sideDivImgShow('${pet.image}')" class="btn bg-white hover:bg-white border border-1 border-[#0E7A81] border-opacity-20"><i class="fa-regular fa-thumbs-up"></i>
@@ -259,6 +277,3 @@ const closeBtn = document.getElementById('close-btn');
       }
   }, 1000);
 });
-
-
-
