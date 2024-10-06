@@ -7,7 +7,6 @@ const categoriesBtnLoad = async () => {
 };
 categoriesBtnLoad();
 
-
 const displayCategoryBtn = (categoryBtn) => {
   const btnContainer = document.getElementById("btn-container");
   categoryBtn.forEach((element) => {
@@ -101,7 +100,7 @@ const displayAllPets = (petsArr) => {
                           <button onclick="sideDivImgShow('${pet.image}')" class="btn bg-white hover:bg-white border border-1 border-[#0E7A81] border-opacity-20"><i class="fa-regular fa-thumbs-up"></i>
                           </button>
 
-                          <button onclick="my_modal_5.showModal()" class="btn bg-white hover:bg-white border border-1 font-bold text-base border-[#0E7A81] border-opacity-20">Adopt</button>
+                          <button onclick="openModal()" class="adoption-btn btn bg-white hover:bg-white border border-1 font-bold text-base border-[#0E7A81] border-opacity-20">Adopt</button>
 
                           <button onclick="modalOpener('${pet.petId}')" class="btn bg-white hover:bg-white border border-1 
                           border-[#0E7A81] border-opacity-20 font-bold text-base">Details</i>
@@ -127,6 +126,8 @@ const sideDivImgShow= (image)=>{
   sideDiv.appendChild(photo);
 }
 
+
+// pet ditails modal function
 const modalOpener = async (id) => {
   const res = await fetch(
     `https://openapi.programming-hero.com/api/peddy/pet/${id}`
@@ -196,5 +197,50 @@ const modalOpener = async (id) => {
   `
   my_modal_1.showModal()
 };
+
+
+
+// adoption btn modal js
+
+function openModal() {
+  const modal = document.getElementById('my_modal_5');
+  modal.showModal();
+
+  document.getElementById('modal-content').innerHTML = `
+      <h3 class="text-3xl font-extrabold">Congrats</h3>
+  `;
+  document.getElementById('close-btn').classList.remove('hidden');
+  document.getElementById('countdown').classList.add('hidden');
+  document.getElementById('countdown').textContent = '';
+}
+
+
+  document.getElementById('close-btn').addEventListener('click', function (e) {
+  e.preventDefault();
+  document.getElementById('close-btn').classList.add('hidden');
+  const modalContent = document.getElementById('modal-content');
+  const adoption = document.createElement('p')
+  adoption.innerHTML=`
+  <p class="text-base font-bold mt-3">Adoption start! Please wait few second.</p>
+  `
+  modalContent.appendChild(adoption);
+  let countdownElement = document.getElementById('countdown');
+  countdownElement.classList.remove('hidden');
+  let countdown = 3;
+
+  countdownElement.textContent = `${countdown}`;
+
+  const interval = setInterval(function () {
+      countdown--;
+      if (countdown > 0) {
+          countdownElement.textContent = `${countdown}`;
+      } else {
+          clearInterval(interval);
+          document.getElementById('my_modal_5').close();
+          
+      }
+  }, 1000);
+});
+
 
 
