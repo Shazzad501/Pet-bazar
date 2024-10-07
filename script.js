@@ -82,7 +82,7 @@ allCardLoad();
 const ditactiveBtn=()=>{
  const buttons = document.getElementsByClassName('category-btn');
  for(let btn of buttons){
-  btn.classList.remove('rounded-full');
+  btn.classList.remove("rounded-full");
   btn.classList.add('rounded-lg')
  }
 };
@@ -97,7 +97,7 @@ const loadCategoryCard = async (category, id) => {
   ditactiveBtn();
   // category btn active class
   const clickBtn = document.getElementById(`btn-${id}`)
-  clickBtn.classList.add('rounded-full');
+  clickBtn.classList.add("rounded-full");
   clickBtn.classList.remove('rounded-lg');
 
   
@@ -105,9 +105,9 @@ const loadCategoryCard = async (category, id) => {
     const timer = 3000;
     const intervaltimer = 1000;
   
-    let slice = timer / intervaltimer;
+    let divid = timer / intervaltimer;
      
-    const intvId = setInterval(()=> {
+    const intervalId = setInterval(()=> {
       
         cardcontainer.innerHTML= ` 
         <div class="col-span-3 text-center" id="loader">
@@ -115,12 +115,12 @@ const loadCategoryCard = async (category, id) => {
         </div>
         `
         
-      slice = slice - 1;
+      divid -= 1;
     }, intervaltimer);
 
   setTimeout(() => {
     displayAllPets(data.data);
-    clearInterval(intvId);
+    clearInterval(intervalId);
   },timer);
 
 };
@@ -172,12 +172,12 @@ const displayAllPets = (petsArr) => {
                         }</p>
                         <hr class="border bottom-1 mt-3 border-gray-400 border-opacity-20">
                         <div class="flex justify-between items-center mt-3">
-                          <button id="thumbs-up" onclick="sideDivImgShow('${pet.image}')" class="btn bg-white hover:bg-white border border-1 border-[#0E7A81] border-opacity-20"><i class="fa-regular fa-thumbs-up"></i>
+                          <button onclick="sideDivImgShow('${pet.image}')" class="btn bg-white hover:border-[#0E7A81] hover:bg-white border border-1 border-[#0E7A81] border-opacity-20"><i class="fa-regular fa-thumbs-up"></i>
                           </button>
 
-                          <button onclick="openModal()" id="adopt" class="adoption-btn btn bg-white hover:bg-white border border-1 font-bold text-base border-[#0E7A81] border-opacity-20">Adopt</button>
+                          <button onclick="openModal()" id="adopt" class="adoption-btn btn bg-white text-[#0E7A81] hover:bg-[#0E7A81] hover:text-white border border-1 font-bold text-base border-[#0E7A81] border-opacity-20">Adopt</button>
 
-                          <button onclick="modalOpener('${pet.petId}')" class="btn bg-white hover:bg-white border border-1 
+                          <button onclick="modalOpener('${pet.petId}')" class="btn bg-white text-[#0E7A81] hover:bg-[#0E7A81] hover:text-white border border-1 
                           border-[#0E7A81] border-opacity-20 font-bold text-base">Details</i>
                           </button>
                         </div>
@@ -280,7 +280,10 @@ const openModal = ()=> {
   modal.showModal();
 
   document.getElementById('modal-content').innerHTML = `
-      <h3 class="text-3xl font-extrabold">Congrats</h3>
+  <div class="flex flex-col items-center justify-center">
+    <div class="w-12 h-12 animate-bounce"><img class="w-full h-full" src="images/handshake.png" alt=""></div>
+    <h3 class="text-3xl font-extrabold">Congrats</h3>
+  </div>  
   `;
   // document.getElementById('close-btn').classList.remove('hidden');
   document.getElementById('countdown').classList.add('hidden');
