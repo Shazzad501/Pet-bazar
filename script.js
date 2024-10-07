@@ -25,7 +25,7 @@ setTimeout(() => {
   displayAllPets(sortedPrice);
   clearInterval(intvId);
 },timer);
-}
+};
 // sorting mathod function 
 const sort = (petPrice) => {
   return petPrice.sort((a, b) => {
@@ -34,8 +34,6 @@ const sort = (petPrice) => {
       return priceB - priceA;
   });
 };
-
-
 
 // category btn load to api function
 const categoriesBtnLoad = async () => {
@@ -87,7 +85,7 @@ const ditactiveBtn=()=>{
   btn.classList.remove('rounded-full');
   btn.classList.add('rounded-lg')
  }
-}
+};
 
 // load daynamically data to categoryli
 const loadCategoryCard = async (category, id) => {
@@ -174,7 +172,7 @@ const displayAllPets = (petsArr) => {
                         }</p>
                         <hr class="border bottom-1 mt-3 border-gray-400 border-opacity-20">
                         <div class="flex justify-between items-center mt-3">
-                          <button onclick="sideDivImgShow('${pet.image}')" class="btn bg-white hover:bg-white border border-1 border-[#0E7A81] border-opacity-20"><i class="fa-regular fa-thumbs-up"></i>
+                          <button id="thumbs-up" onclick="sideDivImgShow('${pet.image}')" class="btn bg-white hover:bg-white border border-1 border-[#0E7A81] border-opacity-20"><i class="fa-regular fa-thumbs-up"></i>
                           </button>
 
                           <button onclick="openModal()" id="adopt" class="adoption-btn btn bg-white hover:bg-white border border-1 font-bold text-base border-[#0E7A81] border-opacity-20">Adopt</button>
@@ -201,7 +199,7 @@ const sideDivImgShow= (image)=>{
   </div>
   `
   sideDiv.appendChild(photo);
-}
+};
 
 // pet ditails modal function
 const modalOpener = async (id) => {
@@ -275,7 +273,6 @@ const modalOpener = async (id) => {
 };
 
 
-
 // adoption btn modal js
 
 const openModal = ()=> {
@@ -285,14 +282,10 @@ const openModal = ()=> {
   document.getElementById('modal-content').innerHTML = `
       <h3 class="text-3xl font-extrabold">Congrats</h3>
   `;
-  document.getElementById('close-btn').classList.remove('hidden');
+  // document.getElementById('close-btn').classList.remove('hidden');
   document.getElementById('countdown').classList.add('hidden');
   document.getElementById('countdown').textContent = '';
-}
-const closeBtn = document.getElementById('close-btn');
-  closeBtn.addEventListener('click', function (e) {
-  e.preventDefault();
-  document.getElementById('close-btn').classList.add('hidden');
+
   const modalContent = document.getElementById('modal-content');
   const adoption = document.createElement('p')
   adoption.innerHTML=`
@@ -315,4 +308,5 @@ const closeBtn = document.getElementById('close-btn');
           
       }
   }, 1000);
-});
+};
+
