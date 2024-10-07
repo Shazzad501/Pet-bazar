@@ -1,3 +1,42 @@
+// sort by price btn function 
+const sortDisplay = async()=>{
+  const res = await fetch(`https://openapi.programming-hero.com/api/peddy/pets`);
+  const data = await res.json();
+  const sortedPrice = sort(data.pets);
+
+  const  cardcontainer= document.getElementById('card-container')
+  const timer = 3000;
+  const intervaltimer = 1000;
+
+  let slice = timer / intervaltimer;
+   
+  const intvId = setInterval(()=> {
+    
+      cardcontainer.innerHTML= ` 
+      <div class="col-span-3 text-center" id="loader">
+       <span  class="loading loading-dots loading-lg"></span>
+      </div>
+      `
+      
+    slice = slice - 1;
+  }, intervaltimer);
+
+setTimeout(() => {
+  displayAllPets(sortedPrice);
+  clearInterval(intvId);
+},timer);
+}
+// sorting mathod function 
+const sort = (petPrice) => {
+  return petPrice.sort((a, b) => {
+      const priceA = a.price ? a.price : 0;
+      const priceB = b.price ? b.price : 0;
+      return priceB - priceA;
+  });
+};
+
+
+
 // category btn load to api function
 const categoriesBtnLoad = async () => {
   const res = await fetch(
@@ -25,7 +64,8 @@ const displayCategoryBtn = (categoryBtn) => {
 };
 // all pet card load to api funtion
  const allCardLoad = async () => {
-  document.getElementById("loader").classList.remove("hidden");
+  const loader = document.getElementById("loader");
+  loader.classList.remove("hidden");
   const res = await fetch(
     `https://openapi.programming-hero.com/api/peddy/pets`
   );
@@ -33,7 +73,7 @@ const displayCategoryBtn = (categoryBtn) => {
 
   setTimeout(() => {
     displayAllPets(data.pets);
-    document.getElementById("loader").classList.add("hidden");
+   loader.classList.add('hidden');
   }, 2000);
 };
 
@@ -105,7 +145,6 @@ const displayAllPets = (petsArr) => {
   }
 
   petsArr.forEach((pet) => {
-    console.log(pet);
     const card = document.createElement("div");
     card.innerHTML = `
       <!-- temp card -->
@@ -138,7 +177,7 @@ const displayAllPets = (petsArr) => {
                           <button onclick="sideDivImgShow('${pet.image}')" class="btn bg-white hover:bg-white border border-1 border-[#0E7A81] border-opacity-20"><i class="fa-regular fa-thumbs-up"></i>
                           </button>
 
-                          <button onclick="openModal()" class="adoption-btn btn bg-white hover:bg-white border border-1 font-bold text-base border-[#0E7A81] border-opacity-20">Adopt</button>
+                          <button onclick="openModal()" id="adopt" class="adoption-btn btn bg-white hover:bg-white border border-1 font-bold text-base border-[#0E7A81] border-opacity-20">Adopt</button>
 
                           <button onclick="modalOpener('${pet.petId}')" class="btn bg-white hover:bg-white border border-1 
                           border-[#0E7A81] border-opacity-20 font-bold text-base">Details</i>
